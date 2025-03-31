@@ -110,11 +110,11 @@ rdgeo:  jsr rdghdr
         ldy #0
 rdloop: lda georam,x
         sta (ptr),y
-        jsr decpc         ;decrement remaining bytes
+        jsr decpc       ;decrement remaining bytes
         lda pc+1
         bne :+
         lda pc
-        beq rdfin               ;exit if remaining bytes == 0
+        beq rdfin       ;exit if remaining bytes == 0
 :       iny
         beq incadr
 rdchpg: inx
@@ -156,9 +156,10 @@ rdghdr: jsr inigeo
         rts
 
         ;; Routine to decrement program counter
-decpc:  sec
-        dec pc
-        bcs :+
+decpc:  dec pc
+        lda pc
+        cmp #$ff
+        bne :+
         dec pc+1
 :       rts
 
