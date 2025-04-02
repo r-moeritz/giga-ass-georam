@@ -1,5 +1,5 @@
-        ;; GEOram patch for Giga-Ass
-        ;; =====================================
+        ;; GEOram patch for Giga-Ass - Standalone routines
+        ;; ===============================================
         ;; 
         ;; Copyright (c) 2025 Ralph Moeritz. MIT license. See file
         ;; COPYING for details.
@@ -112,17 +112,16 @@ rdloop: lda georam,x
         sta (ptr),y
         jsr decpc       ;decrement remaining bytes
         lda pc+1
-        bne :+
+        bne nxtbyt
         lda pc
         beq rdfin       ;exit if remaining bytes == 0
-:       iny
-        beq incadr
-rdchpg: inx
-        beq rdnxpg
+nxtbyt: jsr incoff
+        iny
+        beq nxtpag
         jmp rdloop
-incadr: inc prgadr+1
-        jmp rdchpg
-rdnxpg: jsr incoff
+nxtpag: inc ptr+1
+        lda #0
+        sta ptr
         jmp rdloop
 rdfin:  jsr rdghdr
         jsr prrmsg
