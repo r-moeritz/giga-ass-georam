@@ -1,2 +1,3 @@
 *~
-*.lst
+dist/*.lst
+dist/*.bin
